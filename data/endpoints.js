@@ -5,13 +5,16 @@ const express = require('express');
 const router = express.Router();
 
 //import helpers
-const Users = require('./db-helpers');
+const Users = require('../config/db-helpers');
 
 //import bcrypt library
 const bcrypt = require('bcryptjs');
 
+//import middlewares
+const verified = require('../auth/verified-middleware');
+
 //<---------------GET REQUESTS--------------------
-router.get('/users', (req, res) => {
+router.get('/users', verified, (req, res) => {
 
     Users.getUsers()
         .then(users => {
@@ -68,8 +71,6 @@ router.post('/login', (req, res) => {
             })
         })
 })
-//<---------------PUT REQUESTS--------------------
-//<---------------DELETE REQUESTS--------------------
 
 
 module.exports = router;
