@@ -11,7 +11,7 @@ server.use(express.json());
 const endPoints = require('./data/endpoints');
 
 //Have server use your endpoint
-server.use('/api/users', endPoints)
+server.use('/api', endPoints)
 
 server.get('/', (req, res) => {
     res.send('MAGIC')
