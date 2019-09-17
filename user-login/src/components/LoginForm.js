@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 
 
 const LoginForm = () => {
+
+    const [credentials, setCredentials] = useState({
+        username: '',
+        password: ''
+    })
+
+    const submitHandler = () => {
+        
+    }
+    const changeHandler = () => {
+
+    }
+
 
     return (
         <>
