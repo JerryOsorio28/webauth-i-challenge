@@ -26,17 +26,30 @@ router.get('/users', verified, (req, res) => {
 
 })
 
+router.get('/logout', (req, res) => {
+
+    if(req.session){
+        req.session.destroy(err => {
+            if(err){
+                res.json({ message: 'Unable to log out'})
+            } else {
+                res.status(200).json({ message: 'Logged out sucessfully'});
+            }
+        })
+    } else {
+        res.status(500).json({ message: 'Server error'});
+    }
+})
+
 //<---------------POST REQUESTS--------------------
 router.post('/register', (req, res) => {
     
-    const credentials = req.body; //fetchs the data inside the body
+    let { username, password } = req.body; //fetchs the data inside the body
 
     //This creates a hash for password coming from the body before storing it in the database
-    const hash = bcrypt.hashSync(credentials.password, 12)
-    //this sets the hash to the password
-    credentials.password = hash;
+    const hash = bcrypt.hashSync(password, 12)
 
-    Users.addUser(credentials)
+    Users.addUser({ username, password: hash }) //this sets the hash to the password
     .then(user => {
         res.status(200).json({
             message: 'User was added sucessfully', user
@@ -54,8 +67,9 @@ router.post('/login', (req, res) => {
     const { username, password } = req.body;
 
     Users.getBy({ username })
-        .then(user => {
+        .then(user => { 
             if(user && bcrypt.compareSync(password, user.password)){
+                req.session.user = user;
                 res.status(200).json({
                     message: `Welcome aboard ${user.username}!`
                 })
