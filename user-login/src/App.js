@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import cors from 'cors';
 
 //import components
 import LoginForm from './components/LoginForm'

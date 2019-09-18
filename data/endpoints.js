@@ -14,7 +14,7 @@ const bcrypt = require('bcryptjs');
 const verified = require('../auth/verified-middleware');
 
 //<---------------GET REQUESTS--------------------
-router.get('/users', verified, (req, res) => {
+router.get('/users',  (req, res) => {
 
     Users.getUsers()
         .then(users => {

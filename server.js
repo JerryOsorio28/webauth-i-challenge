@@ -7,6 +7,10 @@ const server = express();
 //import enpoints 
 const endPoints = require('./data/endpoints');
 
+//importing CORS
+const cors = require('cors');
+server.use(cors());
+
 //setting up express session
 const session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
@@ -35,6 +39,7 @@ const sessionConfig = {
 //teach express how to parse data from the body to JSON
 server.use(express.json());
 server.use(session(sessionConfig));
+
 
 //Have server use your endpoint
 server.use('/api', endPoints)
