@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const RegisterForm = () => {
+const RegisterForm = (props) => {
 
     const [credentials, setCredentials] = useState({
         username: '',
@@ -24,7 +24,9 @@ const RegisterForm = () => {
         e.preventDefault();
         axios.post('http://localhost:8000/api/register', credentials)
             .then(res => {
-                console.log(res)
+                if(res.status === 200){
+                    props.history.push('/login')
+                }
             })
             .catch(err => console.log(err.response))
     }

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-import axios from 'axios';
+import { axiosWithAuth } from './axiosWithAuth';
 import { Link } from 'react-router-dom';
 
 
 
-const LoginForm = () => {
+const LoginForm = (props) => {
 
     const [credentials, setCredentials] = useState({
         username: '',
@@ -21,10 +21,15 @@ const LoginForm = () => {
     }
 
     const submitHandler = e => {
+
         e.preventDefault();
-        axios.post('http://localhost:8000/api/login', credentials)
+        axiosWithAuth()
+            .post('http://localhost:8000/api/login', credentials)
             .then(res => {
-                console.log(res)
+                // console.log(res)
+                localStorage.setItem('token', res.data.token)
+                props.history.push('/users')
+
             })
             .catch(err => console.log(err.response))
     }

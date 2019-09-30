@@ -13,6 +13,9 @@ const bcrypt = require('bcryptjs');
 //import middlewares
 const verified = require('../auth/verified-middleware');
 
+//token generator function
+const { generateToken } = require('../auth/generateToken.js');
+
 //<---------------GET REQUESTS--------------------
 router.get('/users',  verified, (req, res) => {
 
@@ -67,11 +70,13 @@ router.post('/login', (req, res) => {
     const { username, password } = req.body;
 
     Users.getBy({ username })
+        .first()
         .then(user => { 
             if(user && bcrypt.compareSync(password, user.password)){
-                req.session.user = user;
+                const token = generateToken(user) //generates token for authentication
                 res.status(200).json({
-                    message: `Welcome aboard ${user.username}!`
+                    message: `Welcome aboard ${user.username}!`,
+                    token
                 })
             } else {
                 res.status(401).json({
@@ -80,8 +85,9 @@ router.post('/login', (req, res) => {
             }
         })
         .catch(err => {
+            console.log(err)
             res.status(500).json({
-                message:'Error while logging in', err: err.response
+                message:'Error while logging in', err: err
             })
         })
 })

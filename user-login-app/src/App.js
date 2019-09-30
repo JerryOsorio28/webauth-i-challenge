@@ -9,6 +9,7 @@ import RegisterForm from './components/RegisterForm'
 import UsersList from './components/UserList'
 import LoginForm from './components/LoginForm';
 import PrivateRoute from './components/PrivateRoute';
+import Welcome from './components/Welcome';
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
       </header>
       <div className='loginForm'>
         <div className='FormBody'>
-          <Route exact path='/' component={LoginForm}/>
+          <Route exact path='/' component={Welcome}/>
+          <Route exact path='/login' component={LoginForm}/>
           <Route path='/register' component={RegisterForm}/>
           <PrivateRoute path='/users' component={UsersList} />
         </div>
