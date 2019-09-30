@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const LoginForm = () => {
+const RegisterForm = () => {
 
     const [credentials, setCredentials] = useState({
         username: '',
@@ -22,7 +22,7 @@ const LoginForm = () => {
 
     const submitHandler = e => {
         e.preventDefault();
-        axios.post('http://localhost:8000/api/login', credentials)
+        axios.post('http://localhost:8000/api/register', credentials)
             .then(res => {
                 console.log(res)
             })
@@ -30,7 +30,7 @@ const LoginForm = () => {
     }
     return (
         <>
-            <h1>Login</h1>
+           <h1>Register</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Field> 
                 <label>Username</label>
@@ -51,10 +51,11 @@ const LoginForm = () => {
                 />
                 </Form.Field>
                 <Button type='submit'>Submit</Button>
-                <p>Don't have an account? <Link to='/register'>Sign up here!</Link></p>
+                <p>Have an account already? <Link to='/'>Login here!</Link></p>
+
             </Form>
         </>
     )
 };
 
-export default LoginForm;
+export default RegisterForm;

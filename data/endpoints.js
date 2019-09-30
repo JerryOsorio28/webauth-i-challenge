@@ -14,7 +14,7 @@ const bcrypt = require('bcryptjs');
 const verified = require('../auth/verified-middleware');
 
 //<---------------GET REQUESTS--------------------
-router.get('/users',  (req, res) => {
+router.get('/users',  verified, (req, res) => {
 
     Users.getUsers()
         .then(users => {
@@ -57,7 +57,7 @@ router.post('/register', (req, res) => {
     })
     .catch(err => {
         res.status(500).json({
-            message:'Unable to add user', err: err.response
+            message:'User already exists, choose unique username', err: err.response
         })
     })
 })

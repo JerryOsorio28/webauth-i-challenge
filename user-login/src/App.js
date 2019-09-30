@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import cors from 'cors';
+import { Route } from 'react-router-dom';
+import axios from 'axios';
 
 //import components
-import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
+import UsersList from './components/UserList'
+import LoginForm from './components/LoginForm';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/users')
+        .then(res => console.log(res))
+        .catch(err => console.log(err.response))
+},[])
+
   return (
     <div className="App">
       <header className="App-header">
@@ -14,7 +25,9 @@ function App() {
       </header>
       <div className='loginForm'>
         <div className='FormBody'>
-          <LoginForm />
+          <Route exact path='/' component={LoginForm}/>
+          <Route path='/register' component={RegisterForm}/>
+          <PrivateRoute path='/users' component={UsersList} />
         </div>
       </div>
     </div>
